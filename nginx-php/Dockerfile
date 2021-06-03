@@ -46,10 +46,10 @@ RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $H
     mkdir -p /www /etc/nginx/sites-available /autostart/ && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php7/php.ini && \
     sed -i 's/; sys_temp_dir = .*/sys_temp_dir = "\/tmp"/' /etc/php7/php.ini && \
-    # curl -sS https://getcomposer.org/installer | /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
+    curl -sS https://getcomposer.org/installer | /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
 
 # support for parallel installs. Faster composer.
-# RUN composer global require hirak/prestissimo 
+# RUN composer global require hirak/prestissimo
 
 # Configure nginx
 COPY ./files/nginx/nginx.conf /etc/nginx/nginx.conf
@@ -69,5 +69,5 @@ WORKDIR /www
 
 VOLUME /www
 
-EXPOSE 80 9000
+EXPOSE 80 443 9000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
