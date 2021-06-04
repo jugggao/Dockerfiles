@@ -18,6 +18,7 @@ RUN echo -e "${APK_REPOSITORIES}" >> /etc/apk/repositories && \
     cat /etc/apk/repositories && \
     apk --update add \
       curl \
+      gnu-libiconv \
       php7 \
       php7-curl \
     #   php7-pecl \
@@ -27,6 +28,10 @@ RUN echo -e "${APK_REPOSITORIES}" >> /etc/apk/repositories && \
       php7-zlib \
       php7-mbstring \
       php7-json \
+      php7-pdo \
+      php7-pdo_dblib \
+      php7-pdo_mysql \
+      php7-session \
       nginx \
       supervisor $INSTALL_PACKAGES
 
