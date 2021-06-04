@@ -48,7 +48,7 @@ RUN echo "Creating user '${HOST_USER}' with id '${HOST_UID}'"
 RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
     ln -snf /usr/bin/php7 /usr/bin/php && \
     rm -rf /var/cache/apk/* && \
-    mkdir -p /www /etc/nginx/sites-available /autostart/ && \
+    mkdir -p /data/app /etc/nginx/sites-available /autostart/ && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php7/php.ini && \
     sed -i 's/; sys_temp_dir = .*/sys_temp_dir = "\/tmp"/' /etc/php7/php.ini && \
     curl -sS https://getcomposer.org/installer | /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
@@ -58,21 +58,21 @@ RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $H
 
 # Configure nginx
 COPY ./files/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./files/nginx/default_server.conf /sites/default.conf
-COPY ./files/www/* /www/
+COPY ./files/nginx/default_server.conf /etc/nginx/conf.d/default.conf
+COPY ./files/www/* /data/app/
 
 # Configure PHP-FPM
 COPY ./files/php/php-fpm.conf /etc/php7/php-fpm.conf
-COPY ./files/php/php-fpm.d/www.conf /etc/php7/php-fpm.d/www.conf
+COPY ./files/php/php-fpm.d/data/app.conf /etc/php7/php-fpm.d/data/app.conf
 
 # Configure supervisord
 COPY ./files/supervisor/supervisord.conf /etc/supervisor/conf.d/
 COPY ./files/supervisor/init.d/* /autostart/
 
 # Add application
-WORKDIR /www
+WORKDIR /data/app
 
-VOLUME /www
+VOLUME /data/app
 
 EXPOSE 80 443 9000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
