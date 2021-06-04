@@ -63,7 +63,7 @@ COPY ./files/www/* /data/app/
 
 # Configure PHP-FPM
 COPY ./files/php/php-fpm.conf /etc/php7/php-fpm.conf
-COPY ./files/php/php-fpm.d/www.conf /etc/php7/php-fpm.d/data/app.conf
+COPY ./files/php/php-fpm.d/www.conf /etc/php7/php-fpm.d/www.conf
 
 # Configure supervisord
 COPY ./files/supervisor/supervisord.conf /etc/supervisor/conf.d/
