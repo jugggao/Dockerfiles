@@ -1,11 +1,11 @@
 FROM alpine:3.11
 LABEL maintainer="Gao Peng <jugg.gao@qq.com>"
 
-ARG HOST_USER
-ENV HOST_USER ${HOST_USER:-"www"}
+# ARG HOST_USER
+# ENV HOST_USER ${HOST_USER:-"www"}
 
-ARG HOST_UID
-ENV HOST_UID ${HOST_UID:-1000}
+# ARG HOST_UID
+# ENV HOST_UID ${HOST_UID:-1000}
 
 ARG INSTALL_PACKAGES
 
@@ -45,10 +45,11 @@ RUN echo -e "${APK_REPOSITORIES}" >> /etc/apk/repositories && \
 #         -u UID      User id
 
 RUN echo "Creating user '${HOST_USER}' with id '${HOST_UID}'"
-RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
-    ln -snf /usr/bin/php7 /usr/bin/php && \
+
+# RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
+RUN ln -snf /usr/bin/php7 /usr/bin/php && \
     rm -rf /var/cache/apk/* && \
-    mkdir -p /data/app /etc/nginx/sites-available /autostart/ && \
+    mkdir -p /data/app /autostart/ && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php7/php.ini && \
     sed -i 's/; sys_temp_dir = .*/sys_temp_dir = "\/tmp"/' /etc/php7/php.ini && \
     curl -sS https://getcomposer.org/installer | /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
@@ -59,7 +60,6 @@ RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $H
 # Configure nginx
 COPY ./files/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./files/nginx/default_server.conf /etc/nginx/conf.d/default.conf
-COPY ./files/www/* /data/app/
 
 # Configure PHP-FPM
 COPY ./files/php/php-fpm.conf /etc/php7/php-fpm.conf
