@@ -12,6 +12,6 @@ RUN wget -nv https://github.com/kubernetes-sigs/kustomize/releases/download/kust
 FROM docker.io/google/cloud-sdk:slim
 
 COPY --from=build kustomize /opt/google-cloud-sdk/bin/kustomize
-COPY --from-build kubectl /
+COPY --from=build kubectl /
 COPY kustomize.bash /builder/kustomize.bash
 ENTRYPOINT ["/builder/kustomize.bash"]
