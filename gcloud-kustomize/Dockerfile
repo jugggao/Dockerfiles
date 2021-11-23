@@ -7,7 +7,7 @@ RUN wget -nv https://github.com/kubernetes-sigs/kustomize/releases/download/kust
   tar xvzf kustomize_${KUSTOMIZE_VERSION}_linux_amd64.tar.gz
 
 
-FROM gcr.io/cloud-builders/gcloud
+FROM docker.io/google/cloud-sdk:slim
 
 COPY --from=build kustomize /builder/google-cloud-sdk/bin/kustomize
 COPY kustomize.bash /builder/kustomize.bash
