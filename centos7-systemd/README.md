@@ -1,0 +1,1 @@
+The image can use systemd inside container.
