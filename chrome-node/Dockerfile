@@ -18,6 +18,8 @@ RUN useradd apps && \
     chown -v -R apps:apps /home/apps && \
     mkdir -p /data/app
 
+# COPY --chown=apps:apps app/ /home/apps/app 
+
 USER apps
 
 COPY bootstrap.sh /
