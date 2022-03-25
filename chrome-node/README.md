@@ -8,7 +8,7 @@
 
 ## 参考
 
-https://github.com/stephen-fox/chrome-docker
-https://www.richud.com/wiki/Ubuntu_Fluxbox_GUI_with_x11vnc_and_Xvfb
-https://phabricator.wikimedia.org/T202710
-https://github.com/nodesource/distributions/blob/master/README.md
+- https://github.com/stephen-fox/chrome-docker
+- https://www.richud.com/wiki/Ubuntu_Fluxbox_GUI_with_x11vnc_and_Xvfb
+- https://phabricator.wikimedia.org/T202710
+- https://github.com/nodesource/distributions/blob/master/README.md
