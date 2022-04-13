@@ -16,7 +16,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && \
 RUN useradd apps && \
     mkdir -p /home/apps && \
     chown -v -R apps:apps /home/apps && \
-    mkdir -p /data/app
+    mkdir -p /data/app && \
+    chown -v -R apps:apps /data/app
 
 # COPY --chown=apps:apps app/ /home/apps/app 
 
