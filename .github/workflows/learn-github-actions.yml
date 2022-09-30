@@ -21,3 +21,5 @@ jobs:
         run: echo '${{ toJSON(strategy) }}'
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
+  dump_jobs_contexts_to_log:
+    uses: ./.github/workflows/jobs.yaml
