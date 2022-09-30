@@ -13,6 +13,8 @@ jobs:
         run: echo '${{ toJSON(github) }}'
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
+      - name: Dump jobs context
+        run: echo '${{ toJSON(jobs) }}'
       - name: Dump steps context
         run: echo '${{ toJSON(steps) }}'
       - name: Dump runner context
