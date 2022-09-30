@@ -2,11 +2,13 @@ name: Context testing
 on: [push]
 
 jobs:
-  uses_jobs:
-    uses: ./.github/workflows/jobs.yaml
   dump_contexts_to_log:
     runs-on: ubuntu-latest
     steps:
+      - name: Uses Job
+        uses: ./.github/workflows/jobs.yaml
+      - name: Dump jobs context
+        run: echo '${{ toJSON(jobs) }}'
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
@@ -23,4 +25,3 @@ jobs:
         run: echo '${{ toJSON(strategy) }}'
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
-  
