@@ -190,11 +190,12 @@ COPY players/hls_basic.html /usr/local/nginx/html/index.html
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
+    mkdir -p /var/lib/nginx/{body,fastcgi,proxy,scgi,uwsgi} && \
     mkdir -p /data
 
 EXPOSE 1935
 EXPOSE 80
 VOLUME /data
 
-ENTRYPOINT ["/usr/local/nginx/sbin/nginx"]
+ENTRYPOINT ["/usr/local/sbin/nginx"]
 CMD ["-g", "daemon off;"]
