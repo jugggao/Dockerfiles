@@ -185,9 +185,16 @@ COPY --from=builder /etc/nginx /etc/nginx
 COPY --from=builder /var/log/nginx /var/log/nginx
 COPY --from=builder /var/lock /var/lock
 COPY --from=builder /var/run/nginx /var/run/nginx
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY players/hls.html /usr/local/nginx/html/index.html
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
-    ln -sf /dev/stderr /var/log/nginx/error.log
+    ln -sf /dev/stderr /var/log/nginx/error.log && \
+    mkdir -p /data
+
+EXPOSE 1935
+EXPOSE 80
+VOLUME /data
 
 ENTRYPOINT ["/usr/local/nginx/sbin/nginx"]
 CMD ["-g", "daemon off;"]
