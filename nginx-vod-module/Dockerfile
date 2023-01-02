@@ -185,7 +185,7 @@ COPY --from=builder /etc/nginx /etc/nginx
 COPY --from=builder /var/log/nginx /var/log/nginx
 COPY --from=builder /var/lock /var/lock
 COPY --from=builder /var/run/nginx /var/run/nginx
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY config/nginx.conf /etc/nginx/nginx.conf
 COPY players/hls_basic.html /usr/local/nginx/html/index.html
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
