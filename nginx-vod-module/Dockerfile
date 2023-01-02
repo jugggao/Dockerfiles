@@ -176,7 +176,7 @@ RUN apt-get update -y && \
     # libx265
     apt-get install -y libx265-dev libnuma-dev && \
     # htop tool
-    apt-get install htop && \
+    apt-get install -y htop && \
     # Clean
     apt-get remove --purge --auto-remove -y
 
