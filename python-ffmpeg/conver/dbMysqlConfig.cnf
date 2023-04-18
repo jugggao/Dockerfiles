@@ -1,0 +1,6 @@
+[dbMysql]
+host = 10.10.115.11
+port = 3306
+user = ambow_wps
+password = gbY5IwST0ZQVvNi4
+db_name = ambow_wps

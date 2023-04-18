@@ -1,4 +1,4 @@
-FROM ubuntu:kinetic
+FROM ubuntu:22.04
 
 LABEL author="jugg.gao@qq.com"
 
@@ -8,6 +8,10 @@ RUN apt-get update -y && \
 
 # Install ffmpeg
 RUN apt-get install -y ffmpeg
+
+# Install libnvidia
+RUN apt-get update -y && \
+    apt-get install -y libnvidia-compute-525 libnvidia-decode-525 libnvidia-encode-525
 
 # Install audiowaveform
 RUN apt-get install -y software-properties-common && \
