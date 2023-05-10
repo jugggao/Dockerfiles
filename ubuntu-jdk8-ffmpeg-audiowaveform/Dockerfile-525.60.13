@@ -1,0 +1,42 @@
+FROM busybox:1.36 AS builder
+
+ENV OS="ubuntu2204" VERSION="525_525.60.13"
+
+RUN wget --no-check-certificate -qP /tmp https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/libnvidia-compute-${VERSION}-0ubuntu1_amd64.deb && \
+    wget --no-check-certificate -qP /tmp https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/libnvidia-decode-${VERSION}-0ubuntu1_amd64.deb && \
+    wget --no-check-certificate -qP /tmp https://developer.download.nvidia.com/compute/cuda/repos/${OS}/x86_64/libnvidia-encode-${VERSION}-0ubuntu1_amd64.deb
+
+FROM ubuntu:22.04
+
+LABEL author="jugg.gao@qq.com"
+
+# Install JDK8
+RUN apt-get update -y && \
+    apt-get install -y openjdk-8-jdk
+
+# Install ffmpeg
+RUN apt-get install -y ffmpeg
+
+# Install libnvidia
+COPY --from=builder /tmp/libnvidia*.deb /tmp/
+RUN apt-get update -y && \
+    apt-get install -y libbsd0 libmd0 libx11-6 libx11-data libxau6 libxcb1 libxdmcp6 libxext6 && \
+    dpkg -i /tmp/libnvidia*.deb  && \
+    apt-get remove --purge --auto-remove -y && \
+    rm -f /tmp/libnvidia.*.deb
+
+# Install audiowaveform
+RUN apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:chris-needham/ppa && \
+    apt-get update -y && \
+    apt-get install -y audiowaveform
+
+# Timezone settings.
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Shanghai
+RUN apt-get -y install tzdata
+
+# Clean
+RUN apt-get remove --purge --auto-remove -y
+
+CMD ["/bin/bash"]
